@@ -1,5 +1,0 @@
-TPS Activity 1
-
-1. I expect the program to print 2.
-
-2.  
