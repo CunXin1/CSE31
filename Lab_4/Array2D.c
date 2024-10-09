@@ -9,8 +9,9 @@ int main() {
 
 	// (3) Add your code to complete allocating and initializing the 2-D array here. The content should be all 0.
 	for(i = 0; i < n; i++) {
-    	arr[i] = (int*) calloc(n, sizeof(int)); // calloc initializes all elements to 0
+    	*(arr + i) = (int*) calloc(n, sizeof(int));
 	}
+
 
 
 
@@ -21,11 +22,12 @@ int main() {
     for (i = 0; i < n; i++) {
     	for (j = 0; j < n; j++) {
         	if (i == j)
-            	arr[i][j] = i + 1; // Set diagonal elements
+            	*(*(arr + i) + j) = i + 1;
         	else
-            	arr[i][j] = 0; // This line is technically unnecessary because calloc set all to 0
+            	*(*(arr + i) + j) = 0;
     	}
 	}
+
 
 	
 	
@@ -39,9 +41,10 @@ void printArray(int **array, int size) {
     int i, j;
     for (i = 0; i < size; i++) {
         for (j = 0; j < size; j++) {
-            printf("%d ", array[i][j]);
+            printf("%d ", *(*(array + i) + j));
         }
         printf("\n");
     }
 }
+
 

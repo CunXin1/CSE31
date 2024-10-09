@@ -1,0 +1,65 @@
+TPS Activity 1
+
+1. I expect it to print 2
+
+2. Before changing the code, I think it will be 2 as well
+
+3. It gets 44434241
+
+4. It print to 2, but it should be 42, because of the memory overlaping, it got the wrong value.
+
+5.  (a) 2 arrats: four_c and four_ints
+    (b) yes, they are been pointed to the same location
+    (c) Address of four_ints: 0061FF08      Address of four_c: 0061FF08
+ 
+6.  There are 4 bytes for each int
+
+7.  Address: 0061FF08, Value: 44434241  Address: 0061FF0C, Value: 2     
+    Address: 0061FF10, Value: 2         Address: 0061FF14, Value: 2
+
+8.  There are only 1 byte for che char.
+
+9.  Address of four_c[0]: 0061FF08, Value: 41   Address of four_c[1]: 0061FF09, Value: 42
+    Address of four_c[2]: 0061FF0A, Value: 43   Address of four_c[3]: 0061FF0B, Value: 44
+
+10. C increments array indexes based on the data type size, with int pointers moving 4 bytes and char pointers moving 1 byte per step.
+
+
+
+TPS Activity 2
+
+1. It setting up the first dimension of a 2D array, with n 1D array
+
+2. We can use *(arr + i) to access ith array
+
+3.  for(i = 0; i < n; i++) {
+        *(arr + i) = (int*) calloc(n, sizeof(int));
+    }
+    We can use *(*(arr + i) + j) to access ith row and jth column
+
+4. Function needs to know how many elements to print, c does not have the size by itself
+
+5.  void printArray(int **array, int size) {
+        int i, j;
+        for (i = 0; i < size; i++) {
+            for (j = 0; j < size; j++) {
+                printf("%d ", *(*(array + i) + j));
+            }
+            printf("\n");
+        }
+    }
+
+6.  for (i = 0; i < n; i++) {
+    	for (j = 0; j < n; j++) {
+        	if (i == j)
+            	*(*(arr + i) + j) = i + 1;
+        	else
+            	*(*(arr + i) + j) = 0;
+    	}
+	}
+
+7.  1 0 0 0 0
+    0 2 0 0 0
+    0 0 3 0 0
+    0 0 0 4 0
+    0 0 0 0 5

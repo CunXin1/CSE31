@@ -16,8 +16,11 @@ int main() {
         four_c[i] = 'A' + i; // ASCII value of 'A' is 65 or 0x41 in Hex.
     
     // Add your code for the exercises here:
-	printf("%x\n", four_ints[1]);
 	printf("%x\n", four_ints[0]);
+
+	printf("%x\n", four_ints[1]);
+
+
 
 
 	printf("Address of four_ints: %p\n", (void*)four_ints);
