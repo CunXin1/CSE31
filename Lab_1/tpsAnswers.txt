@@ -1,0 +1,51 @@
+TPS activity 1:
+
+1. The date that I sign for CSE31 is Sep 18th, which I miss two weeks of classes. I don't have any partners with lab 1 assignment, so I will show the partners with the second lab assignment. 
+Ruibo Sun	Adrian Botello		Luther Pavline
+
+2. Three tutorials on Linux:
+	https://www.youtube.com/watch?v=gd7BXuUQ91w&t=139s
+	https://www.golinuxcloud.com/linux-commands-cheat-sheet/
+	https://www.tecmint.com/essential-linux-commands/
+
+3. 	https://www.geeksforgeeks.org/linux-tutorial/
+	https://www.geeksforgeeks.org/30-days-of-linux/
+	https://www.geeksforgeeks.org/linux-commands-cheat-sheet/
+
+4. Add bookmark to browser.
+
+
+TPS activity 2:
+
+1. I am using a Mac, So I use cmd + space to search, then enter "Terminal" to open it.
+	a. Yes, I can open multiple terminal in the same time.
+	b. Opening more than one terminal is important for multi-tasking, or login Linux with different users. 
+
+2. I use ls command to view inside the directory, -l for detailed version, -a for all files, -h for readable.
+
+3. I will use cd to change the directory, and cd /Users/ruibosun/Desktop to my Desktop, since my username is ruibosun.
+
+4. I will use mkdir to make a new directory, mkdir CSE31 to get a new directory named CSE31.
+
+
+TPS activity 3:
+
+1. 	https://osxdaily.com/2023/05/02/how-install-gcc-mac/
+	https://solarianprogrammer.com/2019/10/12/compiling-gcc-macos/
+	https://dev.to/dracorx/guide-how-to-setup-c-on-macos-with-sublime-text-and-gcc-without-homebrew-4nf6
+
+2.  Add bookmark to browser.
+
+3. I will type gcc main.c -o main to compile my program. -o is to name the output of my program. In this case, I name it to main.
+
+4. If there are no error message showed on the terminal, then I will know that the program has complied successfully.
+
+5. -c will make the main.c file to main.o file, it's a object file which can't be run.
+
+6. -g will generate the debugging information, it can also be used for gdb to debug.
+
+7. I will type gcc main.c -o cselab1, -o is to name the output of my program. In this case, I name it to cselab1.
+
+8. On mac, If I just enter gcc main.c, it will generate a outfile named a.out
+
+9. I will use ./cselab1 to run the program that I just complied.

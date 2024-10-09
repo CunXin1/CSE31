@@ -1,0 +1,19 @@
+
+Assignment 1
+
+1. The line 25 scanf("%d", input); caused the segmentation fault.
+
+2. Change the line 25, add the & to input, &input 
+
+3. The sum needs to be pointer so that the value sum can pass through main function.
+
+4. Add * before sum so that the sum becomes a pointer, the value in read_values can be passed to main.
+
+Assignment 2
+
+1. When enter "HELLO!" and "hello!", the output is HELLO!hello!. The output is as expected
+
+2. The output becomes HI!hi!hello! The bug is that when new inputs are provided, the program does not properly reset str1,
+so residual data from previous operations remains, leading to unexpected output. 
+
+3. The combined length of str1 and str2 can exceed the allocated buffer size, causing a buffer overflow and resulting in undefined behavior.
