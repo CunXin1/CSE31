@@ -1,0 +1,74 @@
+TPS activity 1:
+
+1. Ruibo Sun	Adrian Botello	  Luther Pavline
+
+2.  Three tutorials on GDB:
+	https://dev.to/jasonelwood/setup-gdb-on-macos-in-2020-489k
+	https://thomaskov.medium.com/gdb-debugger-for-macos-5cb7751dc0a9
+	https://gabriellesc.github.io/teaching/resources/GDB-cheat-sheet.pdf
+
+3. 	https://www.tutorialspoint.com/gnu_debugger/gdb_commands.htm
+	https://visualgdb.com/gdbreference/commands/
+	https://www.geeksforgeeks.org/gdb-step-by-step-introduction/
+
+4. Add bookmark to browser.
+
+
+TPS activity 2:
+
+1. I will use gcc -g punishment.c -o punish to compile my file and use gdb
+
+2. I will use gdb ./punish
+
+3. I will use run command to run file in gdb
+
+4. Breakpoints are markers setting in program to pause execution. I will use break 15 to set the program at while loop
+
+5. I will use next to continue run the program line by line
+
+6. I will use print to display variables. 
+	print repeat 
+	print num
+	print typo
+
+7. continue command will run the remaining program
+
+8. quit to exit from GDB
+
+
+TPS activity 3:
+
+1. Four variables are declared. 2 of them are pointer variables, px and py
+
+2. Since the variables are not initialized, they will contain garbage values.
+
+3. Initialize them at declaration to set starting values.
+
+4. Use printf("%p %p", &x, &y) to display addresses.
+
+5. Assign px = &x; py = &y then print with printf("%p %p", px, py)
+
+6. Use a for-loop with printf("%d ", *(arr + i)); inside it to print each element of arr using pointer arithmetic.
+
+7. Yes, check with printf("%p", arr); which shows the first element's address.
+
+8. Yes, arr is the address of the first element, shown by printf("%p", arr);.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

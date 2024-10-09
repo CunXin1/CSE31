@@ -1,0 +1,22 @@
+Pseudocode for averages.c
+
+
+Define functions:
+  checkNumber(num): Returns 1 if sum of digits is even, -1 if odd
+  printOutput(count): Prints the ordinal count (like "1st", "2nd")
+
+Start main program:
+  Initialize variables for sums and counts of odd and even digit sums
+  Loop until user inputs 0:
+    Display prompt
+    Read user input
+    Break loop if input is 0
+    Determine if sum of digits is even or odd using checkNumber
+    Update appropriate sum and count based on result
+
+  If any numbers entered:
+    Display averages for even and odd sums if counts are non-zero
+  Else:
+    Print "No average to compute"
+
+End main program
