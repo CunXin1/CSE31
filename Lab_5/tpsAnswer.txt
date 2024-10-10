@@ -1,0 +1,38 @@
+TPS Activity 1:
+
+1. MARS is one of the MIPS simulator. MIPS is one of the assembly language
+
+2. Download MARS and run it. 
+
+3. Toturials for MARS:
+    https://profile.iiita.ac.in/bibhas.ghoshal/COA_2021/tutorials/Tutorial_MIPS_Using_MARS.pdf
+
+4. Download files to Lab_5
+
+5.  (a) Using File and Open to open a assembly file
+    (b) Using Run and Assemble to complie the file
+    (c) Using the run button to run the file
+    (d) No, we need to assemble the file then run it
+    (e) Using the run1 button to run a line of the file
+    (f) Using the reset button and then run again 
+
+
+TPS Activity 2:
+
+1.  .data：define the constant
+    .word: store the data value
+    .text: all the command for the program
+
+2. minus the $t3 value 1, this is to count the loop circle
+
+3. check whether $t3 valie is 0, if it 0, jump to finish
+
+4. In Execute, there are a window for Bkpt, click to add breakpoint
+
+5. Using the run button again to run until the next breakpoint
+
+6. In the register window, we can change the value of different address
+
+7. n is in 0x10010000, initial value is 13, and will decrease to 0.
+
+8. Line 19 syscall is print out a int value, and line 21 syscall is terminate the program
