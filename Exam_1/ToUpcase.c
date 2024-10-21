@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 void upcase_by_ref( char** n ) { 
     char* p = *n;
@@ -17,25 +18,11 @@ void upcase_name(char* names[], int i) {
 
 int main() {
 
-
-
-
-
     //char* names[] = {"alice", "bob", "charlie", "diana"};
-
-
-
-
-    char name0[] = "alice";
-    char name1[] = "bob";
-    char name2[] = "charlie";
-    char name3[] = "diana";
+    
+    char name0[] = "alice", name1[] = "bob", name2[] = "charlie", name3[] = "diana";
     char* names[] = {name0, name1, name2, name3};
-
-
-
-
-
+    
     upcase_name(names, 2);
     
     for(int i = 0; i < 4; i++){
