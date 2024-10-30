@@ -1,0 +1,83 @@
+TPS Activity 1:
+
+1. The text segment start with 0x00400000 and data start with 0x10010000.
+
+2. The relation is not one-to-one. Some source code is easier than the basic code
+
+3. There are 4 bytes between each locations.
+
+4. Each address location displays 8 columns.
+
+5. The address difference corresponds to moving to the next word, represented by the 8 columns of one byte each.
+
+6. We can add m: .word 20 to the data section.
+
+7. m stored in the first address on the Data Segment 0x10010000, value +4 = 20
+
+8. str1: .asciiz "I love CSE31!"
+
+9. str1 is in 0x10010000, value +8, +c, +10, +14
+
+10. The ASCII of str1 in memory doesn't match the typical character array storage.
+
+11. in finish: 
+    la 	    $a0, str1
+	li 	    $v0, 4
+	syscall
+
+12. The la $t3, n instruction loads the address of n into $t3, meaning $t3 will hold the memory address of n, not its value; 
+    to load the value, use the lw instruction afterwards.
+
+
+TPS Activity 2:
+
+1. For Simplicity:
+    < can be directly implemented using slt.
+    > can be implemented by swapping the operands and using slt.
+    <= can be implemented by using slt and beq.
+    >= can be implemented by using slt and bne.
+
+2.  .data
+    n: .word 25
+
+3.  str1: .asciiz "Less than\n"
+    str2: .asciiz "Less than or equal to\n"
+    str3: .asciiz "Greater than\n"
+    str4: .asciiz "Greater than or equal to\n"
+
+4.  # Prompt user for input
+    li $v0, 5
+    syscall
+    move $t0, $v0
+
+5.  # Compare input with n
+    slt $t2, $t0, $t1
+    bne $t2, $zero, less_than
+
+
+6.  # Print "Greater than or equal to\n"
+    li $v0, 4
+    la $a0, str4
+    syscall
+    j end
+
+less_than:
+    li $v0, 4
+    la $a0, str1
+    syscall
+    j end
+
+7.  # Compare input with n
+    slt $t2, $t1, $t0
+    bne $t2, $zero, greater_than
+
+8.  li $v0, 4
+    la $a0, str2
+    syscall
+    j end
+
+greater_than:
+    li $v0, 4
+    la $a0, str3
+    syscall
+    j end
