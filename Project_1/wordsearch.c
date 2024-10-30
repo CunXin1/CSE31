@@ -126,12 +126,12 @@ void printInt(int** arr) {
 int isValid(int x, int y) {
     return x >= 0 && x < bSize && y >= 0 && y < bSize;
 }
-// Function to search the puzzle for the word without repeating cells
+
+// Function to search without repeating cells
 int noRepeatSearch(char **arr, int **path, int x, int y, char *word, int index) {
     // Check if the current character in the puzzle matches the current character in the word
-    // Also, ensure that this cell has not been used before in the current path (path[x][y] == 0)
     if (toUpper(*(*(arr + x) + y)) != toUpper(*(word + index)) || *(*(path + x) + y) != 0) {
-        return 0; // If not matching or already used, return 0 (failure)
+        return 0;
     }
 
     // Mark the current cell in the path with the position of the character in the word (index + 1)
@@ -139,36 +139,33 @@ int noRepeatSearch(char **arr, int **path, int x, int y, char *word, int index) 
 
     // Check if we have reached the end of the word
     if (*(word + index + 1) == '\0') {
-        return 1; // Word found successfully
+        return 1;
     }
 
     // Explore all 8 possible directions from the current cell
     for(int dir = 0; dir < 8; dir++) {
-        // Calculate new coordinates based on direction
         int newX = x + getDx(dir);
         int newY = y + getDy(dir);
-
-        // Check if the new coordinates are within the bounds of the puzzle grid
         if (isValid(newX, newY)) {
             // Recursively search for the next character in the word from the new cell
             if (noRepeatSearch(arr, path, newX, newY, word, index + 1)) {
-                return 1; // If the word is found along this path, return 1 (success)
+                return 1;
             }
         }
     }
 
-    // Backtracking: Unmark the current cell in the path, as this path did not lead to a solution
+    // if this path did not lead to a solution
     *(*(path + x) + y) = 0;
-    return 0; // Return 0 (failure) as the word was not found along this path
+    return 0;
 }
 
-// Function to search the puzzle for the word allowing cell reuse
+// Function to search allowing cell reuse
 int repeatSearch(char **arr, int **path, int x, int y, char *word, int index) {
     int found = 0; // Flag to indicate if the word is found
 
     // Check if the current character in the puzzle matches the current character in the word
     if (toUpper(*(*(arr + x) + y)) != toUpper(*(word + index))) {
-        return 0; // If not matching, return 0 (failure)
+        return 0;
     }
 
     // Update the path at the current cell by appending the current index (index + 1)
@@ -177,37 +174,35 @@ int repeatSearch(char **arr, int **path, int x, int y, char *word, int index) {
 
     // Check if we have reached the end of the word
     if (*(word + index + 1) == '\0') {
-        return 1; // Word found successfully
+        return 1;
     }
 
     // Explore all 8 possible directions from the current cell
     for (int dir = 0; dir < 8; dir++) {
-        // Calculate new coordinates based on direction
         int newX = x + getDx(dir);
         int newY = y + getDy(dir);
-
-        // Check if the new coordinates are within the bounds of the puzzle grid
         if (isValid(newX, newY)) {
             // Recursively search for the next character in the word from the new cell
             if (repeatSearch(arr, path, newX, newY, word, index + 1)) {
-                found = 1; // Set the flag if the word is found along this path
+                found = 1;
             }
         }
     }
 
     if (found) {
-        return 1; // Return 1 (success) if the word is found
+        return 1; // Return 1 if the word is found
     } else {
-        // Backtracking: Remove the last index added to the path at the current cell
+        // if this path did not lead to a solution
         *(*(path + x) + y) /= 10;
-        return 0; // Return 0 (failure) as the word was not found along this path
+        return 0;
     }
 }
 
-// Main function to search the puzzle for the word
+// Function to search the puzzle for the word
 void searchPuzzle(char **arr, char *word) {
-    int found = 0; // Flag to indicate if the word is found
-    int **path = (int **)malloc(bSize * sizeof(int *)); // Allocate memory for the path matrix
+    int found = 0;
+    // Allocate memory for the path matrix
+    int **path = (int **)malloc(bSize * sizeof(int *));
 
     // Initialize the path matrix with zeros
     for (int i = 0; i < bSize; i++) {
@@ -217,33 +212,24 @@ void searchPuzzle(char **arr, char *word) {
     // Iterate over each cell in the puzzle grid
     for (int i = 0; i < bSize; i++) {
         for (int j = 0; j < bSize; j++) {
-            // Check if the cell matches the first character of the word (case-insensitive)
+            // Check if the cell matches the first character
             if (toUpper(*(*(arr + i) + j)) == toUpper(*(word + 0))) {
-                // Attempt to find the word without repeating cells
+                // Search for the word in the puzzle without cell reuse
                 if (noRepeatSearch(arr, path, i, j, word, 0)) {
-                    found = 1; // Word found
-                    break; // Exit the loops as we have found the word
+                    found = 1;
+                    break;
                 }
-                // If not found, attempt to find the word allowing cell reuse
+                // Searcb for the word in the puzzle allowing cell reuse
                 if (repeatSearch(arr, path, i, j, word, 0)) {
-                    found = 1; // Word found
-                    break; // Exit the loops as we have found the word
+                    found = 1;
+                    break;
                 }
             }
         }
-        if (found) {
-            break; // Break the outer loop if the word is found
-        }
     }
 
-    // Output the results of the search
+    // Output the search results
     output(path, found);
-
-    // Free the allocated memory for the path matrix
-    for (int i = 0; i < bSize; i++) {
-        free(*(path + i));
-    }
-    free(path);
 }
 
 // Function to output the search results
