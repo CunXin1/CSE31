@@ -1,0 +1,67 @@
+TPS Activity 1:
+
+1.  Procedures execute tasks without returning a value.
+    Functions perform calculations and return a value.
+    Methods are functions associated with objects.
+
+2.  When the CPU runs a program, it executes the statements according to the statement order (line numbers). 
+    Unless there is a branch (beq/bne) or jump (j/jal) statement, it will just execute the next statement.
+
+3.  
+
+#include <stdio.h>
+
+int m = 10;
+int n = 5;
+
+int sum(int a, int b) {
+    return a + b;
+}
+
+int main() {
+    
+    int a0 = m;
+    int a1 = n;
+
+    int v0 = sum(a0, a1);
+
+    printf("%d\n", v0);
+
+    return 0;
+}
+
+4.  j jump to line 20, add $v0, $a0, $a1, which adds $a0 and $a1 and stores the result in $v0.
+
+5.  No. jr $ra is jump to the next line, while j is jump to a fixed line or label.
+
+6.  The return address should be saved in $ra before calling SUM. 
+    The current line attempts this with addi $ra, $zero, 0, but it’s an incorrect address.
+
+7.  Error in : invalid program counter value: 0x00000000
+    Go: execution terminated with errors.
+
+8.  The address is 0x00400020
+
+9.  addi $ra,$zero, 0x00400020
+
+10. The output should be 15, the sum of m and n.
+
+11. Use jal instead of j to call a procedure.
+    It automatically saves the return address.
+
+12. jal SUM
+
+
+TPS Activity 2:
+
+1. The output will be 38, 5 + 10 + 5 + 15 + 5 - 2 = 40 - 2 = 38
+
+2. The main function set values of x and y, call sum with x, and do addition then print y
+
+3. MAIN uses jal SUM, which saves the return address in $ra. 
+
+4. $a0 is modified in SUM to pass a new argument to SUB, overwriting the original argument.
+
+5. $s0 is overwritten in SUM when loading m's value, causing the original value from MAIN to be lost.
+
+6. 
