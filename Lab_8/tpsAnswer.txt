@@ -1,0 +1,44 @@
+TPS Activity 1:
+
+1. open the code fib.s
+
+2.  li 	$v0, 5
+	syscall
+	move 	$t3, $v0
+
+3.  .data
+    enter: .asciiz "Please enter a number: "        
+
+    .text
+    main: 	li 	$v0, 4
+	        la 	$a0, enter
+	        syscall
+
+4. li 	$v0, 5
+	syscall
+	move 	$t3, $v0
+
+5. we will comment 
+    n:      .word 13
+	la      $t3, n
+
+6.  Please enter a number: 10
+    55
+    -- program is finished running --
+
+
+TPS Activity 2:
+
+1. The output will be 29
+
+2. open recursion.s
+
+3. li $v0, 4
+	la $a0, enter
+	syscall
+
+4. li $v0, 5
+	syscall
+	move $a0, $v0
+
+5. 
