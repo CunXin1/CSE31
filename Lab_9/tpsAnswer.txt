@@ -1,0 +1,59 @@
+TPS Activity 1:
+
+1. download the file
+2. load proc1.s
+3. read the code
+4. Every Machine instruction includes 32 bits
+
+5. There are three instruction types in MIPS:
+R-type: add, slt.
+I-type: addi, bne.
+J-type: j, jal.
+
+6.  
+a. addi $s0, $zero, 25 is I-type instruction.
+It has four fields:
+opcode (6 bits)
+rs (5 bits)
+rt (5 bits)
+immediate (16 bits)
+b. Opcode: 001000, 0x08 in hex.
+rs: $zero, 0x00.
+rt: $s0, 0x10.
+Immediate: 25 0x0019.
+
+c. 0010 0000 0001 0000 0000 0000 0001 1001
+0x20100019
+
+7. 
+a. Machine code at 0x00400010: 0x0230402A
+0000 0010 0011 0000 0100 0000 0010 1010
+b. R-type
+It has six fields: opcode, rs, rt, rd, shamt, funct
+c. Opcode: 0x00.
+rs: $s1 17, 0x11
+rt: $s0 16, 0x10
+rd: $t0 8, 0x08
+shamt: 0, 0x00
+funct: 0x2A 101010
+d. slt, funct: 0x2A 101010
+e. slt $t0, $s1, $s0
+
+8.
+a. I-type
+b.Opcode: 0x05
+rs: $t0 (0x08)
+rt: $zero (0x00).
+c. Target label: LESS; Address: 0x0040001C
+d. No, because the immediate field uses a relative offset
+e. immediate value is 2.
+f. Binary: 000101 01000 00000 0000 0000 0000 0010
+Hex: 0x15000002
+
+9. 
+a. J-type instruction with two fields: opcode and address
+b. Opcode: 0x02
+c. Jumps to label END at address 0x00400030.
+d.we use the lower 26 bits: 00 0100 0000 0000 0000 0000 1100
+e. 0x0810000c
+
