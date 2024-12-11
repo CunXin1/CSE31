@@ -1,0 +1,73 @@
+TPS Activity 1:
+
+1. open the code fib.s
+
+2.  li 	$v0, 5
+	syscall
+	move 	$t3, $v0
+
+3.  .data
+    enter: .asciiz "Please enter a number: "        
+
+    .text
+    main: 	li 	$v0, 4
+	        la 	$a0, enter
+	        syscall
+
+4. li 	$v0, 5
+	syscall
+	move 	$t3, $v0
+
+5. we will comment 
+    n:      .word 13
+	la      $t3, n
+
+6.  Please enter a number: 10
+    55
+    -- program is finished running --
+
+
+TPS Activity 2:
+
+1. The output will be 29
+
+2. open recursion.s
+
+3.  li $v0, 4
+	la $a0, enter
+	syscall
+
+4.  li $v0, 5
+	syscall
+	move $a0, $v0
+
+5. It need to move from $v0 to $a0
+
+6.  move $a0, $v0
+    li $v0, 1
+    syscall
+
+7.  sw $ra, 0($sp)
+    sw $s0, 4($sp)
+    sw $a0, 8($sp)
+
+8.  li $v0, 1
+
+9.  li $v0, 3
+
+10. we need to save $a0 for change
+
+11. lw $t1, 8($sp)
+    addi $a0, $t1, -2
+
+12. move $s0, $v0
+
+13. lw $t1, 8($sp)
+    addi $a0, $t1, -1
+
+14. add $v0, $s0, $v0
+
+15. lw $ra, 0($sp)
+    lw $s0, 4($sp)
+    lw $a0, 8($sp)
+    addi $sp, $sp, 12
