@@ -1,5 +1,5 @@
 .data 
-
+ 
 orig: .space 100	# In terms of bytes (25 elements * 4 bytes each)
 sorted: .space 100
 
@@ -26,7 +26,6 @@ newline: .asciiz "\n"  # Newline character
 # It then prints out average score with the specified number of (lowest) scores dropped from the calculation.
 main: 
 
-
 	# Save $ra into stack, for different method
 	addi $sp, $sp, -4
 	sw $ra, 0($sp)
@@ -51,28 +50,25 @@ main:
 
 
 loop_in:
+    # Print str1: "Enter score: "
+    li $v0, 4           # Print string
+    la $a0, str1
+    syscall
 
-	# Print str1:"Enter score: "
-	li $v0, 4 	# 4 means print str
-	la $a0, str1 
-	syscall 
+    # Calculate the address in orig to store the value
+    sll $t1, $t0, 2     # $t1 = $t0 * 4 (word-aligned offset)
+    add $t1, $t1, $s1   # $t1 = $t1 + base address of orig ($s1)
 
+    # Read a score from user
+    li $v0, 5           # Read integer
+    syscall
+    sw $v0, 0($t1)      # Store the input at the calculated address
 
-	# Calculate the address in orig to store the value
-	sll $t1, $t0, 2		# $t1 = $t0 * 4
-	add $t1, $t1, $s1	# $t1 = $t1 + base address of orig ($s1)
+    # Increment the counter and check the loop
+    addi $t0, $t0, 1    # $t0++
+    bne $t0, $s0, loop_in
+    # End of loop
 
-
-	# Read a score from user
-	li $v0, 5	# 5 means read integer
-	syscall
-	sw $v0, 0($t1)	# Store the input at the calculated address
-
-
-	# Increment the counter and check the loop
-	addi $t0, $t0, 1	# $t0++
-	bne $t0, $s0, loop_in	# Repeat if $t0 != $s0
-	# end of loop_in
 
 
 	# put the number of assignment $s0 to $a0
@@ -101,6 +97,7 @@ loop_in:
 
 	# $a0: base address of sorted
 	move $a0, $s2	# More efficient than la $a0, sorted
+	move $a1, $s0
 	jal printArray	# Print sorted scores
 	
 
@@ -123,8 +120,10 @@ loop_in:
 	
 	# Your code here to compute average and print it
 	# Compute the average	 $t0 = sum / (numScores - drop)
-	divu $v0, $a1       # Divide $v0 by $a1
-	mflo $t0            # Move the quotient from LO to $t0
+	move $t1, $v0   # t1 = sum
+	move $t2, $a1   # t2 = count
+	divu $t1, $t2
+	mflo $t0           # Move the quotient from LO to $t0
 
 
 	# Print the str5:"Average (rounded down) with dropped scores removed: "
@@ -155,52 +154,60 @@ loop_in:
 # printList takes in an array and its size as arguments. 
 # It prints all the elements in one line with a newline at the end.
 printArray:
-	# Input parameters:
-    # $a0: Base address of the array
-    # $a1: Size of the array (number of elements)
+    # Save $ra, $a0, $a1 onto the stack
+    addi $sp, $sp, -12
+    sw $ra, 0($sp)    # save return address
+    sw $a0, 4($sp)    # save base address of array
+    sw $a1, 8($sp)    # save array length
 
 
-	# $t0 is the loop counter, initialize to 0
-    move $t0, $0          
-
+    # Initialize counter t0 = 0
+    move $t0, $zero
 
 print_loop:
+    # Before each iteration, restore $a0, $a1 so we don't lose the base address
+    lw $a1, 8($sp)     # a1 = array length
+    lw $a0, 4($sp)     # a0 = array base address
 
+    # Check if all elements have been printed
+    beq $t0, $a1, print_done
 
-    # Calculate the address of the current element
-    sll $t1, $t0, 2       # $t1 = $t0 * 4 (convert index to byte offset)
-    add $t1, $t1, $a0     # $t1 = $t1 + base address of the array ($a0)
+    # Calculate address of current element: array[t0]
+    sll $t1, $t0, 2     # t1 = t0 * 4
+    add $t1, $t1, $a0   # t1 = address of array[t0]
 
+    # Load current element
+    lw $t2, 0($t1)      # t2 = array[t0]
 
-    # Load the current element and print it
-    lw $t2, 0($t1)        # Load the current element into $t2
-    move $a0, $t2         # Move the element's value to $a0
-    li $v0, 1             # syscall to print an integer
+    # Print the element (integer)
+    move $a0, $t2
+    li $v0, 1           # print integer syscall
     syscall
-
 
     # Print a space after the element
-    li $v0, 4             # syscall to print a string
-    la $a0, space         # Address of the space character
+    la $a0, space
+    li $v0, 4           # print string syscall
     syscall
 
+    # Increment counter and loop
+    addi $t0, $t0, 1
+    j print_loop
 
-    # Increment the counter and continue the loop
-    addi $t0, $t0, 1      # $t0++
-
-
-    # if $t0 < $a1, go back to printArray_loop:
-	blt $t0, $a1, print_loop 
-
-
-    # Print a newline after all elements
-    li $v0, 4             # syscall to print a string
-    la $a0, newline       # Address of the newline character
+print_done:
+    # Print a newline after finishing the array
+    la $a0, newline
+    li $v0, 4
     syscall
 
+    # Restore $a1, $a0, $ra
+    lw $a1, 8($sp)
+    lw $a0, 4($sp)
+    lw $ra, 0($sp)
+    addi $sp, $sp, 12
 
-    jr $ra                # Return to the caller
-	
+    # Return to caller
+    jr $ra
+
 	
 
 
@@ -336,49 +343,58 @@ done:
 
 
 
-
 # calcSum takes in an array and its size as arguments.
 # It RECURSIVELY computes and returns the sum of elements in the array.
 # Note: you MUST NOT use iterative approach in this function.
+
+ # calcSum:
+# Arguments:
+#   $a0 = base address of the array (int *arr)
+#   $a1 = length of the array (int len)
+# Return:
+#   $v0 = sum of the first `len` elements of the array
+
 calcSum:
-    # Save $ra a0, a1 into stack, for recursion
+    # Save $ra, $a0, and $a1 on the stack
     addi $sp, $sp, -12
     sw $ra, 0($sp)
-    sw $a0, 4($sp)    # save address of array
-    sw $a1, 8($sp)    # save the length
-	
+    sw $a0, 4($sp)    # Save array base address
+    sw $a1, 8($sp)    # Save array length
 
-    # if (len <= 0) return 0;
+
+    # Base case: if (len <= 0) return 0
     blez $a1, base_case
 
 
-    # when len > 0：
-    # get arr[len-1] and reduce the length
-    addi $a1, $a1, -1          # len = len - 1
-    sll $t0, $a1, 2            # t0 = (len-1)*4
-    add $t0, $t0, $a0          # t0 = arr + (len-1)
-    lw  $t1, 0($t0)            # t1 = arr[len-1]
+    # Recursive case:
+    # Call calcSum(arr, len - 1)
+    addi $a1, $a1, -1         # Decrement length (len - 1)
+    jal calcSum               # Recursive call, result will be in $v0
 
 
-    # recursion calcSum(arr, len-1)
-    jal calcSum
+    # Load arr[len - 1] (current element)
+    lw $a0, 4($sp)            # Restore array base address
+    lw $a1, 8($sp)            # Restore original array length
+    addi $a1, $a1, -1         # Compute index (len - 1)
+    sll $t0, $a1, 2           # Offset = (len - 1) * 4
+    add $t0, $t0, $a0         # Address of arr[len - 1]
+    lw $t1, 0($t0)            # Load arr[len - 1] into $t1
 
 
-    # add arr[len-1] to v0, and jump to end
-    add $v0, $v0, $t1
-    j end_cal
+    # Add the current element to the recursive result
+    add $v0, $v0, $t1         # v0 = calcSum(arr, len - 1) + arr[len - 1]
+    j end_calcSum
 
 
 base_case:
-    # if len <= 0, return 0
+    # Return 0 if len <= 0
     li $v0, 0
 
 
-end_cal:
-    # restore the a1 a0, and ra
-    lw $a1, 8($sp)
-    lw $a0, 4($sp)
+end_calcSum:
+    # Restore $ra, $a0, and $a1 from the stack
     lw $ra, 0($sp)
+    lw $a0, 4($sp)
+    lw $a1, 8($sp)
     addi $sp, $sp, 12
     jr $ra
-
